@@ -25,7 +25,7 @@ meta.index=(function(){
 		$wrapper=$('#wrapper');
 		setContentView();
 		$('#btn').on('click',function(){
-			alert('버튼 클릭!!!!');
+			alert('버튼 클릭!!!!!!');
 			$wrapper.empty();
 		});
 	};

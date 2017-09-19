@@ -14,187 +14,55 @@ meta.common = (function(){
 })();
 
 meta.index=(function(){
+	var algo,js,temp;
 	var init=function(){
-		onCreate();
+		js=$$('j');
+		temp=js+'/template.js';
+		algo=js+'/algo.js';
 		meta.ui.init();
+		onCreate();
 	};
 	var onCreate=function(){
-		setContentView();
-		$('#btn').click(()=>{
-			$wrapper.empty();
-			//meta.auth.init();
-			meta.ui.navbar();
-			meta.ui.arithmetic();
-			$('#resultBtn').click(()=>{
-				$('#result').text('결과:'	+meta.algo.arithmetic(
-					$('#first').val(),$('#last').val()
-				));
-				});
-			$('#arithBtn').click(()=>{
-				alert('등차수열 클릭');
-				$('#content').empty();
-				meta.ui.arithmetic();			
-			$('#resultBtn').click(()=>{
-				$('#result').text('결과:'	+meta.algo.arithmetic(
-					$('#first').val(),$('#last').val()
-					));
-					});
-			});
-			$('#switchBtn').click(()=>{
-				alert('스위치 클릭');
-				$('#content').empty();
-				meta.ui.arithmetic();
-				$('h1').html('1부터 100 스위치수열 합');
-				$('#first').val('1');
-				$('#last').val('100');
-			$('#resultBtn').click(()=>{
-				$('#result').text('결과:'	+meta.algo.switchSeries(
-						));
-				});
-			});
-			$('#geoBtn').click(()=>{
-				alert('계차수열 클릭');
-				$('#content').empty();
-				meta.ui.arithmetic();
-				$('h1').html('계차수열의 합');
-				$('#last_num').html('몇 번');
-				$('#first').val('1').attr('readonly','true');
-				$('#resultBtn').click(()=>{
-					$('#result').text('결과:'	+meta.algo.geometric(
-							$('#last').val()
-					));
-					});
-				
-			});
-			$('#facBtn').click(()=>{
-				alert('팩토리얼 클릭');
-				$('#content').empty();
-				meta.ui.arithmetic();
-				$('h1').html('팩토리얼의 합');
-				$('#last_num').html('몇 번');
-				$('#first').val('1').attr('readonly','true');
-				$('#resultBtn').click(()=>{
-					$('#result').text('결과:'	+meta.algo.factorial(
-							$('#last').val()
-					));
-					});
-				
-			});
-			$('#fiboBtn').click(()=>{
-				alert('피보나치 클릭');
-				$('#content').empty();
-				meta.ui.arithmetic();
-				$('h1').html('피보나치의 합');
-				$('#last_num').html('몇 번');
-				$('#first').val('1').attr('readonly','true');
-				$('#resultBtn').click(()=>{
-					$('#result').text('결과:'	+meta.algo.fibonacci(
-							$('#last').val()
-					));
-					});
-			});
-				
-		});
-	};
-	var setContentView=()=>{
 		$wrapper=$('#wrapper');
 		ctx=$$('x');
-		img=$$('i');
+		img=$$('i');	
+		$.getScript(temp,x=>{
+		
 		var $image=$('<img/>', 
-			{	img: 'loading',
-				src: img+'/loading.gif'
-			}
-		);
-		$image.appendTo($wrapper);		
+				intro.loading(img)	);			
+		$wrapper.append($image);	
+		
 		
 		var $btn=$('<input/>',
 			{id: 'btn',
 			type: 'button',
 			value: '버튼3'
-			}
-		);
-		$wrapper.append($btn);
+			});
+		
+		$('#loading').after($btn);
+		
+		$('#btn').click(()=>{
+			$wrapper.empty();
+			//meta.auth.init();
+			meta.ui.navbar();
+			meta.navbar.init();
+			meta.ui.arithmetic();
+			$('#resultBtn').click(()=>{
+				$.getScript(algo,(x1,x2)=>{
+					$('#result').text('결과:'+series.arithmetic(
+							$('#first').val(),$('#last').val()
+							));
+							});
+				});
+		});
+						
+		});
 	};
+	var setContentView=()=>{};
 	return {
 		init : init
 	};
 })();
-meta.algo={
-		arithmetic : (f,l)=>{
-			var sum=0;
-			var first=f*1;
-			var last=l*1;
-			for(var i=first;i<=last;i++){
-				sum+=i;
-			}			
-		return sum;
-		},
-		switchSeries :()=>{
-			var sum=0;
-			var sw=0;
-			var first=0;
-			do{
-				first++;
-			if(sw==0){
-				sum+=first;
-				sw=1;
-			}else{
-				sum-=first;
-				sw=0;
-			}
-			}
-			while(first<100);
-			return sum;
-			},
-		geometric:(l)=>{
-			var i=1;
-			var j=0;
-			var sum=0;
-			
-			do{
-			i+=j;
-			sum+=i;
-			j++;
-			}
-			while(j<l);
-			return sum;
-		},
-		factorial:(l)=>{
-			var i=1;
-			var j=1;
-			var sum=0;
-			
-			do{
-			j*=i;
-			i++;
-			sum+=j;
-			}
-			while(i<=l);
-			return sum;
-		},
-		fibonacci:(l)=>{
-			var a,b,c,sum,cnt;
-			
-			a=1;
-			b=1;
-			sum=2;
-			cnt=2;
-			while(1){
-				c=a+b;
-				sum+=c;
-				cnt++;
-			if(cnt<l){
-				a=b;
-				b=c;
-			}else{
-				return sum;
-				break;
-			}
-			};
-			return sum;
-			
-		}
-};
 
 meta.auth=(function(){
 	var $wrapper,ctx,img,js,css;
@@ -237,6 +105,158 @@ meta.auth=(function(){
 	    init : init
 	   };
 	})();
+meta.navbar=(function(){
+	var algo,js;
+	var init=function(){
+		onCreate();
+		js=$$('j');
+		algo=js+'/algo.js'
+	};
+	
+	var onCreate=function(){
+		setContentView();
+	};
+	var setContentView=function(){
+		
+		$('#nav_move').on('click',function(){
+			app.controller.moveTo('common','main');
+		});
+		$('#logout').on('click',function(){
+			location.href=app.path.ctx()+"/auth/login_view";
+		});
+		
+		var $u1=$("#navbar_drop_stu");
+		var $u2=$("#navbar_drop_grade");
+		var $u3=$("#navbar_drop_board");
+		
+		$u1.addClass("dropdown-menu");
+		$u2.addClass("dropdown-menu");
+		$u3.addClass("dropdown-menu");
+
+		$('.dropdown-menu a').eq(0).on('click',function(){
+			app.controller.moveTo('member','member_add');
+		});
+		$('.dropdown-menu a').eq(1).on('click',function(){
+			app.member.list('1');
+		});
+		$('.dropdown-menu a').eq(2).on('click',function(){
+			app.controller.moveTo('member','member_detail');
+		});
+		$('.dropdown-menu a').eq(3).on('click',function(){
+			app.controller.moveTo('member','member_delete');
+		});
+		
+		
+		$('.dropdown-menu a').eq(4).on('click',function(){
+			app.controller.moveTo('grade','grade_add');
+		});
+		$('.dropdown-menu a').eq(5).on('click',function(){
+			app.controller.moveTo('grade','grade_list');
+		});
+		$('.dropdown-menu a').eq(6).on('click',function(){
+			app.controller.moveTo('grade','grade_detail');
+		});
+		$('.dropdown-menu a').eq(7).on('click',function(){
+			app.controller.moveTo('grade','grade_delete');
+		});
+		
+		$('.dropdown-menu a').eq(8).on('click',function(){
+			app.controller.moveTo('board','board_write');
+		});
+		$('.dropdown-menu a').eq(9).on('click',function(){
+			app.controller.moveTo('board','board_list');
+		});
+		$('.dropdown-menu a').eq(10).on('click',function(){
+			app.controller.moveTo('board','board_detail');
+		});
+		$('.dropdown-menu a').eq(11).on('click',function(){
+			app.controller.moveTo('board','board_delete');
+		});
+		
+		$('#arithBtn').click(()=>{
+			alert('등차수열 클릭');
+			$('#content').empty();
+			meta.ui.arithmetic();			
+		$('#resultBtn').click(()=>{
+			$.getScript(algo,(x1,x2)=>{
+				$('#result').text('결과:'+series.arithmetic(
+						$('#first').val(),$('#last').val()
+						));
+						});
+			});
+			
+		});
+		$('#switchBtn').click(()=>{
+			alert('스위치 클릭');
+			$('#content').empty();
+			meta.ui.arithmetic();
+			$('h1').html('1부터 100 스위치수열 합');
+			$('#first').val('1');
+			$('#last').val('100');
+		$('#resultBtn').click(()=>{
+			$.getScript(algo,()=>{
+				$('#result').text('결과:'+series.switchSeries(				
+						));
+						});
+		
+			});
+		});
+				
+		$('#geoBtn').click(()=>{
+			alert('계차수열 클릭');
+			$('#content').empty();
+			meta.ui.arithmetic();
+			$('h1').html('계차수열의 합');
+			$('#last_num').html('몇 번');
+			$('#first').val('1').attr('readonly','true');
+			$('#resultBtn').click(()=>{
+				$.getScript(algo,(x)=>{
+					$('#result').text('결과:'+series.differSeries(
+							$('#last').val()
+							));
+							});
+				});
+			
+		});
+		$('#facBtn').click(()=>{
+			alert('팩토리얼 클릭');
+			$('#content').empty();
+			meta.ui.arithmetic();
+			$('h1').html('팩토리얼의 합');
+			$('#last_num').html('몇 번');
+			$('#first').val('1').attr('readonly','true');
+			$('#resultBtn').click(()=>{
+				$.getScript(algo,(x)=>{
+					$('#result').text('결과:'+series.factorial(
+							$('#last').val()
+							));
+							});
+				});
+			
+		});
+		$('#fiboBtn').click(()=>{
+			alert('피보나치 클릭');
+				$('#content').empty();
+			meta.ui.arithmetic();
+			$('h1').html('피보나치의 합');
+			$('#last_num').html('몇 번');
+			$('#first').val('1').attr('readonly','true');
+			$('#resultBtn').click(()=>{
+				$.getScript(algo,()=>{
+					$('#result').text('결과:'+series.fibonacci(
+							
+							));
+							});
+				});
+		});	
+	};
+	
+	return {
+		init : init
+		
+	};
+})();
+
 meta.ui=(function(){
 	var $wrapper,ctx,img,js,css;
 	var init=function(){
@@ -349,7 +369,6 @@ meta.ui=(function(){
 meta.component={
 		input:function(json){
 		return $('<input/>',json);}
-	
 };
 
 meta.session ={

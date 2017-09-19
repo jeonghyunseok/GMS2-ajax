@@ -20,54 +20,83 @@ meta.index=(function(){
 	};
 	var onCreate=function(){
 		setContentView();
-		$('#btn').on('click',function(){
+		$('#btn').click(()=>{
 			$wrapper.empty();
 			//meta.auth.init();
 			meta.ui.navbar();
 			meta.ui.arithmetic();
-			$('#resultBtn').on('click',function(){
+			$('#resultBtn').click(()=>{
 				$('#result').text('결과:'	+meta.algo.arithmetic(
 					$('#first').val(),$('#last').val()
 				));
 				});
-			$('#arithBtn').on('click',function(){
+			$('#arithBtn').click(()=>{
 				alert('등차수열 클릭');
 				$('#content').empty();
-				meta.ui.arithmetic();
-				$('#resultBtn').on('click',function(){
-					$('#result').text('결과:'	+meta.algo.arithmetic(
-						$('#first').val(),$('#last').val()
+				meta.ui.arithmetic();			
+			$('#resultBtn').click(()=>{
+				$('#result').text('결과:'	+meta.algo.arithmetic(
+					$('#first').val(),$('#last').val()
 					));
 					});
 			});
-			$('#switchBtn').on('click',function(){
+			$('#switchBtn').click(()=>{
 				alert('스위치 클릭');
 				$('#content').empty();
-				meta.ui.switchSeries();
-				$('#resultBtn').on('click',function(){
-					$('#result').text('결과:'	+meta.algo.switchSeries(
-							$('#first').val(),$('#last').val()
-					));
+				meta.ui.arithmetic();
+				$('h1').html('1부터 100 스위치수열 합');
+				$('#first').val('1');
+				$('#last').val('100');
+			$('#resultBtn').click(()=>{
+				$('#result').text('결과:'	+meta.algo.switchSeries(
+						));
 				});
 			});
-			$('#geoBtn').on('click',function(){
-				alert('등비수열 클릭');
+			$('#geoBtn').click(()=>{
+				alert('계차수열 클릭');
 				$('#content').empty();
+				meta.ui.arithmetic();
+				$('h1').html('계차수열의 합');
+				$('#last_num').html('몇 번');
+				$('#first').val('1').attr('readonly','true');
+				$('#resultBtn').click(()=>{
+					$('#result').text('결과:'	+meta.algo.geometric(
+							$('#last').val()
+					));
+					});
+				
 			});
-			$('#facBtn').on('click',function(){
+			$('#facBtn').click(()=>{
 				alert('팩토리얼 클릭');
 				$('#content').empty();
+				meta.ui.arithmetic();
+				$('h1').html('팩토리얼의 합');
+				$('#last_num').html('몇 번');
+				$('#first').val('1').attr('readonly','true');
+				$('#resultBtn').click(()=>{
+					$('#result').text('결과:'	+meta.algo.factorial(
+							$('#last').val()
+					));
+					});
+				
 			});
-			$('#fiboBtn').on('click',function(){
+			$('#fiboBtn').click(()=>{
 				alert('피보나치 클릭');
 				$('#content').empty();
+				meta.ui.arithmetic();
+				$('h1').html('피보나치의 합');
+				$('#last_num').html('몇 번');
+				$('#first').val('1').attr('readonly','true');
+				$('#resultBtn').click(()=>{
+					$('#result').text('결과:'	+meta.algo.fibonacci(
+							$('#last').val()
+					));
+					});
 			});
-		//	meta.ui.switchSeries();
-			
-			
+				
 		});
 	};
-	var setContentView=function(){
+	var setContentView=()=>{
 		$wrapper=$('#wrapper');
 		ctx=$$('x');
 		img=$$('i');
@@ -91,7 +120,7 @@ meta.index=(function(){
 	};
 })();
 meta.algo={
-		arithmetic : function(f,l){
+		arithmetic : (f,l)=>{
 			var sum=0;
 			var first=f*1;
 			var last=l*1;
@@ -100,11 +129,10 @@ meta.algo={
 			}			
 		return sum;
 		},
-		switchSeries :function(f,l){
+		switchSeries :()=>{
 			var sum=0;
 			var sw=0;
-			var first=f*1;
-			var last=l*1;
+			var first=0;
 			do{
 				first++;
 			if(sw==0){
@@ -115,9 +143,57 @@ meta.algo={
 				sw=0;
 			}
 			}
-			while(first<=last);
+			while(first<100);
 			return sum;
-			}		
+			},
+		geometric:(l)=>{
+			var i=1;
+			var j=0;
+			var sum=0;
+			
+			do{
+			i+=j;
+			sum+=i;
+			j++;
+			}
+			while(j<l);
+			return sum;
+		},
+		factorial:(l)=>{
+			var i=1;
+			var j=1;
+			var sum=0;
+			
+			do{
+			j*=i;
+			i++;
+			sum+=j;
+			}
+			while(i<=l);
+			return sum;
+		},
+		fibonacci:(l)=>{
+			var a,b,c,sum,cnt;
+			
+			a=1;
+			b=1;
+			sum=2;
+			cnt=2;
+			while(1){
+				c=a+b;
+				sum+=c;
+				cnt++;
+			if(cnt<l){
+				a=b;
+				b=c;
+			}else{
+				return sum;
+				break;
+			}
+			};
+			return sum;
+			
+		}
 };
 
 meta.auth=(function(){
@@ -227,7 +303,7 @@ meta.ui=(function(){
 		 +'   	<ul id="navbar_drop_board" class="dropdown-menu">'
 		 +'		<li><a id="arithBtn">등차수열</a></li>'
 		 +'		<li><a id="switchBtn">스위치수열</a></li>'
-		 +'		<li><a id="geoBtn">등비수열 </a></li>'
+		 +'		<li><a id="geoBtn">계차수열 </a></li>'
 		 +'		<li><a id="facBtn">팩토리얼</a></li>'
 		 +'		<li><a id="fiboBtn">피보나치</a></li>'
 		 +'   	</ul>'
@@ -238,49 +314,23 @@ meta.ui=(function(){
 		 +'</div>'
 		 +'</nav>'	
 		 );	};
-	var arithmetic=function(){
+	var arithmetic=()=>{
 		var content='<div id="content">'
-			+'<h1>*1부터 100까지 등차수열의 합*</h1>'
+			+ '<h1>등차 수열의 합</h1>'
 			+'<span id="first_num">첫번째 숫자</span>'
 			+'<span id="last_num">마지막 숫자</span>'
 			+'<div id="result"></div></div>'			
 		$wrapper.after(content);
 		$('#first_num').after(meta.component.input({
 			id: 'first',
-			type: 'text',
-			placeholder :'시작값'
+			type: 'text'
+		
 			}));
 		
 		$('#last_num').after(meta.component.input({
 			id: 'last',
-			type: 'text',
-			placeholder :'끝값'
-				}));
+			type: 'text'
 			
-		$('#result').before(meta.component.input({
-			id: 'resultBtn',
-			type: 'button',
-			value :'결과보기'
-		}
-		));
-	};
-	var switchSeries =function(){
-		var content='<div id="content">'
-			+'<h1>*스위치 수열의 합*</h1>'
-			+'<span id="first_num">첫번째 숫자</span>'
-			+'<span id="last_num">마지막 숫자</span>'
-			+'<div id="result"></div></div>'			
-		$wrapper.after(content);
-		$('#first_num').after(meta.component.input({
-			id: 'first',
-			type: 'text',
-			placeholder :'시작값'
-			}));
-		
-		$('#last_num').after(meta.component.input({
-			id: 'last',
-			type: 'text',
-			placeholder :'끝값'
 				}));
 			
 		$('#result').before(meta.component.input({
@@ -293,7 +343,6 @@ meta.ui=(function(){
 		return{
 			init :init,
 			arithmetic:arithmetic,
-			switchSeries:switchSeries,
 			navbar:navbar
 		};
 })();
@@ -304,8 +353,7 @@ meta.component={
 };
 
 meta.session ={
-  init : function(x){
-			      sessionStorage.setItem('x',x);
+  init :(x)=>{    sessionStorage.setItem('x',x);
 			      sessionStorage.setItem('j',x+'/resources/js');
 			      sessionStorage.setItem('i',x+'/resources/img');
 			      sessionStorage.setItem('c',x+'/resources/css');

@@ -11,7 +11,10 @@
  	<script src="${path.js}/meta.js"></script>
 </head>
 <body>
-<div id="wrapper"></div>
+<div id="wrapper">
+<div id="navbar"></div>
+<div id="container"></div>
+</div>
 </body>
 <!-- <p1>dhfD5O</p1> -->
 <script>

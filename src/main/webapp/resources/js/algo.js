@@ -75,3 +75,65 @@ var series={
 		}
 
 }
+var sort={
+		selection:(sortList)=>{
+			console.log('start:'+sortList);
+			var m,i,j,k,x;
+			var p=sortList;
+			m=-1;
+			do{	m++	}while(m<4);
+			i=-1;
+			do{ i++; 
+				j=i;
+				do{
+					j++
+					if(sortList[i]*1>sortList[j]*1){
+						k=sortList[i];
+						sortList[i]=sortList[j];
+						sortList[j]=k;
+					}
+				}while(j<4);
+			}while(i<3);
+			for(x=0;x<=4;x++)
+				console.log('end:'+sortList);
+			return p
+			},
+			
+		bubble:(x)=>{
+			console.log('start:'+x);
+			var i=0,j=0,k=0;
+			for(i=0;i<x.length;i++){
+				for(j=0;j<x.length;j++){
+					if(x[j]*1 > x[j+1]*1){
+						k=x[j];
+						x[j]=x[j+1];
+						x[j+1]=k;
+					}
+				}
+			}
+			console.log('end:'+x);
+			return x;
+		},
+		insertion:(x)=>{
+			console.log('start:'+x);
+			var i=0,j=0,k=0;
+			for(i=0;i<x.length;i++){
+				for(j=0;j<x.length;j++){
+					if(x[i]*1<x[j]*1){
+						k=x[i];
+						x[i]=x[j];
+						x[j]=k;
+					}
+				}
+			}
+			console.log('end:'+x);
+			return x		
+		},
+		ranking:(x)=>{return x},
+		binSearch:(x)=>{},
+		merge:(x)=>{},
+		stack:(x)=>{}
+}
+var mtx={}
+var math={}
+var appl={}

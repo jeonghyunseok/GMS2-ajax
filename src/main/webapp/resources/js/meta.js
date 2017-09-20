@@ -1,20 +1,20 @@
 var meta=meta || {};
-meta.common=(function(){
-	var init=function(ctx){
+meta.common=(()=>{
+	var init=ctx=>{
 		onCreate();
 		meta.session.init(ctx);
 		meta.index.init();
 	};
-	var onCreate=function(){
+	var onCreate=()=>{
 		setContentView();
 	};
-	var setContentView=function(){};
+	var setContentView=()=>{};
 	return { init:init };
 })();
-meta.index=(function(){
+meta.index=(()=>{
 	var $wrapper,$navbar,$container,ctx,img,js,css,
 		temp,algo;
-	var init=function(){
+	var init=()=>{
 			js=$$('j');
 			temp=js+'/template.js';
 			algo=js+'/algo.js';
@@ -23,11 +23,22 @@ meta.index=(function(){
 			img=$$('i');
 			onCreate();
 		};
-	var onCreate=function(){
+	var onCreate=()=>{
 		$.getScript(temp,(x,y)=>{
-			$container.append(compUI.image('loading',img+'/loading.gif'));
-			$('#loading').after(compUI.input('btn','button'));
-			$('#btn').val('버튼');
+			$container.append(compUI.div('content')).css({'width':'100%','text-align': 'center'});
+			
+			$('#content').css({'width':'50%','margin': '0 auto'}).append(compUI.image('loading',img+'/loading.gif'));
+			$('#loading').after(compUI.h1('h-btn'));
+			
+			$('#h-btn').append(compUI.span('btn')).attr('display','inline');
+			$('#btn').html('알고리즘').addClass('label label-default');
+			
+			$('#h-btn').append(compUI.span('btn2')).attr('display','inline');
+			$('#btn2').html('LOGIN').addClass('label label-danger').css({'margin-left':'10px'});
+			
+			$('#h-btn').append(compUI.span('btn3')).attr('display','inline');
+			$('#btn3').html('게시판').addClass('label label-primary').css({'margin-left':'10px'});
+			
 			$('#btn').click(()=>{
 				$container.empty();
 				//meta.auth.init();	
@@ -54,19 +65,19 @@ meta.index=(function(){
 	return {init:init};
 })();
 
-meta.auth=(function(){
+meta.auth=(()=>{
 	var $wrapper,ctx,img,js,css,temp;
-	var init=function(){
-		onCreate();
+	var init=()=>{
 		$wrapper=$('#wrapper');
 		img=$$('i');
 		js=$$('j');
 		temp=js+'/template.js';
+		onCreate();
 	};
-	var onCreate=function(){setContentView();};
-	var setContentView=function(){
+	var onCreate=()=>{setContentView();};
+	var setContentView=()=>{
 		$.getScript(temp,(i)=>{
-			$wrapper.append(intro.login(img));
+			$wrapper.append(introUI.login(img));
 			$('#login_input').after(meta.comp.input(
 					{
 						type : 'button',
@@ -84,14 +95,14 @@ meta.auth=(function(){
 		});
 		
 	};
-	var joinView=function(){};
+	var joinView=()=>{};
 	return {
 		init : init
 	};
 })();
-meta.navbar=(function(){
+meta.navbar=(()=>{
 	var algo,js,temp,$container;
-	var init=function(){
+	var init=()=>{
 		js=$$('j');
 		$container=$('#container');
 		algo=js+'/algo.js';
@@ -101,14 +112,8 @@ meta.navbar=(function(){
 		/*algo=js+'/algo.js';*/
 		
 	};
-	var onCreate=function(){
-		$.getScript(temp,function(){
-			var $u1=$("#navbar_ul_stu");
-			var $u2=$("#navbar_ul_grade");
-			var $u3=$("#navbar_ul_board");
-			$u1.addClass("dropdown-menu");
-			$u2.addClass("dropdown-menu");
-			$u3.addClass("dropdown-menu");
+	var onCreate=()=>{
+		$.getScript(temp,()=>{
 			$('#navbar').html(introUI.navbar());
 			$('#container').html(algoUI.series());
 			$('#start_txt').after(compUI.input('start','text'));
@@ -126,43 +131,43 @@ meta.navbar=(function(){
 							));
 				});
 			});
-			$('.dropdown-menu a').eq(0).on('click',function(){
+			$('.dropdown-menu a').eq(0).on('click',()=>{
 				//app.controller.moveTo('member','member_add');
 			});
-			$('.dropdown-menu a').eq(1).on('click',function(){
+			$('.dropdown-menu a').eq(1).on('click',()=>{
 				//app.member.list(1);
 			});
-			$('.dropdown-menu a').eq(2).on('click',function(){
+			$('.dropdown-menu a').eq(2).on('click',()=>{
 				//app.controller.moveTo('member','member_detail');
 			});
-			$('.dropdown-menu a').eq(3).on('click',function(){
+			$('.dropdown-menu a').eq(3).on('click',()=>{
 				//app.controller.deleteTarget('hong','member','member_delete');
 			});
-			$('.dropdown-menu a').eq(4).on('click',function(){
+			$('.dropdown-menu a').eq(4).on('click',()=>{
 				//app.controller.moveTo('grade','grade_add');
 			});
-			$('.dropdown-menu a').eq(5).on('click',function(){
+			$('.dropdown-menu a').eq(5).on('click',()=>{
 				//app.controller.moveTo('hong','grade','grade_list');
 			});
-			$('.dropdown-menu a').eq(6).on('click',function(){
+			$('.dropdown-menu a').eq(6).on('click',()=>{
 				//app.controller.moveTo('grade','grade_detail');
 			});
-			$('.dropdown-menu a').eq(7).on('click',function(){
+			$('.dropdown-menu a').eq(7).on('click',()=>{
 				//app.controller.deleteTarget('hong','grade','grade_delete');
 			});
-			$('.dropdown-menu a').eq(8).on('click',function(){
+			$('.dropdown-menu a').eq(8).on('click',()=>{
 				//app.controller.moveTo('board','board_write');
 			});
-			$('.dropdown-menu a').eq(9).on('click',function(){
+			$('.dropdown-menu a').eq(9).on('click',()=>{
 				//app.controller.moveTo('board','board_list');
 			});
-			$('.dropdown-menu a').eq(10).on('click',function(){
+			$('.dropdown-menu a').eq(10).on('click',()=>{
 				//app.controller.moveTo('board','board_detail');
 			});
-			$('.dropdown-menu a').eq(11).on('click',function(){
-				//app.controller.deleteTarget('hong','board','board_delete');
+			$('.dropdown-menu a').eq(11).on('click',()=>{
+				//app.controller.moveTo('board','board_delete');
 			});
-			$('#arithBtn').on('click',function(){
+			$('#arithBtn').click(()=>{
 				$container.html(algoUI.series());
 				$('#start_txt').after(compUI.input('start','text'));
 				$('#start').attr('placeholder','시작값');
@@ -250,12 +255,131 @@ meta.navbar=(function(){
 					});
 				})
 			});
-		});
+			$('#selBtn').click(()=>{
+				alert('select 버튼');
+				$container.html(algoUI.sort());
+				var sortList =new Array(5);
+				$('#add').before(compUI.input('addBtn','button'));
+				$('#addBtn').val('입력버튼');
+				$('#start_txt').after(compUI.input('start','text'));
+				$('#start').attr('placeholder','값');
+				$('h1').html('selection 배열');
+				var i=0;
+				
+				$('#addBtn').click((x)=>{
+					sortList[i]=$('#start').val();
+					$('#start').val('');
+					i++;
+					if(i==5){
+						alert(sortList);
+						$('#start_txt').remove();
+						$('#start').remove();
+						$('#addBtn').val('결과보기');
+						$('#addBtn').click((x)=>{
+							console.log('선택정렬');
+						$('#addBtn').remove();
+						$.getScript(algo,(x)=>{					
+							$('#result').html('<h3>결과값 '+sort.selection(sortList)+'</h3>');});
+						i=0;						
+					});	}			
+					
+				});
+			
+			});
+			$('#bubbleBtn').click(()=>{
+				alert('bubble 버튼');
+				$container.html(algoUI.sort());
+				var sortList =new Array(5);
+				$('#add').before(compUI.input('addBtn','button'));
+				$('#addBtn').val('입력버튼');
+				$('#start_txt').after(compUI.input('start','text'));
+				$('#start').attr('placeholder','값');
+				$('h1').html('bubble 배열');
+				var i=0;
+			$('#addBtn').click((x)=>{
+				sortList[i]=$('#start').val();
+				$('#start').val('');
+				i++;
+				if(i==5){
+					alert(sortList);
+					$('#start_txt').remove();
+					$('#start').remove();
+					$('#addBtn').val('결과보기');
+					$('#addBtn').click((x)=>{
+						console.log('버블정렬');
+					$('#addBtn').remove();
+						$.getScript(algo,(x)=>{					
+						$('#result').html('<h3>결과값 '+sort.bubble(sortList)+'</h3>');});
+						i=0;						
+					});	}			
+					
+				});
+			
+			});
+			$('#insertBtn').click(()=>{
+				alert('insert 버튼');
+				$container.html(algoUI.sort());
+				var sortList =new Array(5);
+				$('#add').before(compUI.input('addBtn','button'));
+				$('#addBtn').val('입력버튼');
+				$('#start_txt').after(compUI.input('start','text'));
+				$('#start').attr('placeholder','값');
+				$('h1').html('insert 배열');
+				var i=0;
+			$('#addBtn').click((x)=>{
+				sortList[i]=$('#start').val();
+				$('#start').val('');
+				i++;
+				if(i==5){
+					alert(sortList);
+					$('#start_txt').remove();
+					$('#start').remove();
+					$('#addBtn').val('결과보기');
+					$('#addBtn').click((x)=>{
+						console.log('insert 정렬');
+					$('#addBtn').remove();
+						$.getScript(algo,(x)=>{					
+						$('#result').html('<h3>결과값 '+sort.insertion(sortList)+'</h3>');});
+						i=0;						
+					});	}			
+					
+				});
+			
+			});
+			$('#rankBtn').click(()=>{
+				alert('rank 버튼');
+				$container.html(algoUI.sort());
+				var sortList =new Array(5);
+				$('#add').before(compUI.input('addBtn','button'));
+				$('#addBtn').val('입력버튼');
+				$('#start_txt').after(compUI.input('start','text'));
+				$('#start').attr('placeholder','값');
+				$('h1').html('rank 배열');
+				var i=0;
+			$('#addBtn').click((x)=>{
+				sortList[i]=$('#start').val();
+				$('#start').val('');
+				i++;
+				if(i==5){
+					alert(sortList);
+					$('#start_txt').remove();
+					$('#start').remove();
+					$('#addBtn').val('결과보기');
+					$('#addBtn').click((x)=>{
+						console.log('rank 정렬');
+					$('#addBtn').remove();
+						$.getScript(algo,(x)=>{					
+						$('#result').html('<h3>결과값 '+sort.ranking(sortList)+'</h3>');});
+						i=0;						
+					});	}			
+					
+				});
+			
+			});
+		});			
 	};
-
 	return {init:init};
 })();
-
 
 meta.session=
 	{

@@ -129,8 +129,8 @@ var sort={
 			console.log('end:'+x);
 			return x		
 		},
-		ranking:(x)=>{return x},
-		binSearch:(x)=>{},
+		ranking:(x)=>{ return x;},
+      	binSearch:(x)=>{},
 		merge:(x)=>{},
 		stack:(x)=>{}
 }

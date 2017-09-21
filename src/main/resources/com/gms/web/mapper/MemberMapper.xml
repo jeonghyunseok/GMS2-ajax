@@ -24,13 +24,13 @@ select count(*) as count from member;
 <select  id="login" resultType="com.gms.web.member.MemberDTO" parameterType="com.gms.web.command.CommandDTO">
 select * from member where member_id= #{search};
 </select>
-<select  id="selectAll" resultType="com.gms.web.member.StudentDTO" parameterType="com.gms.web.command.CommandDTO">
+<select  id="selectSome" resultType="com.gms.web.member.StudentDTO" parameterType="com.gms.web.command.CommandDTO">
  select c.*, num from 
 			 (select @Rnum := @Rnum + 1 num, t.* 
 		   from student t,(select @rnum := 0) b) c 
 		  where num between #{startRow} and #{endRow}  ;
  </select>
- <select  id="selectByName" resultType="com.gms.web.member.StudentDTO" parameterType="com.gms.web.command.CommandDTO">
+ <select  id="selectOne" resultType="com.gms.web.member.StudentDTO" parameterType="com.gms.web.command.CommandDTO">
   select t2.*
   from (select @rnum := @rnum +1 as num, s.*
         from student s, (select @rnum := 0) b 

@@ -18,48 +18,14 @@
 				<th style="width: 5%;">조회수</th>
 			</tr>
 			<tr style="width: 10%;">
-				<td class="border-black">1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
+				<td class="border-black"></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
 			</tr>
-			<tr style="width: 10%;">
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-
-			</tr>
-			<tr style="width: 10%;">
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-
-			</tr>
-			<tr style="width: 10%;">
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-
-			</tr>
-			<tr style="width: 10%;">
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-			</tr>
+			
 		</table>
 		<br />
 		<%@ include file="../common/footer.jsp" %>

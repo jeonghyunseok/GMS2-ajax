@@ -1,5 +1,4 @@
 var introUI={
-	
 	login : i=>{
 		return '<div id="container">'
 		+'<div id="login_box">'
@@ -95,8 +94,9 @@ var introUI={
 		+'</nav>';
 	}
 };
+
 var compUI={
-	    br    :()=>{return $('<br/>');},
+	      br    :()=>{return $('<br/>');},
 	      div   : x=>{return $('<div/>',{id:x});},
 	      h1    : x=>{return $('<h1/>',{id:x});},
 	      span  : x=>{return $('<span/>',{id:x});},
@@ -113,9 +113,29 @@ var compUI={
 	      td : ()=>{return $('<td/>')},
 	      idTag : (x)=>{return $('<'+x+'/>')},
 	      tag : (x,y)=> {return $('<'+x+'/>')
-	         id:y
+	        id:y
 	      }
 	
+}
+var bbsUI={
+		tbl : ()=>{
+			var tbl='  <table id="board_tab" border=1>'
+			+'			<thead><tr class="backcolor-yellow">'
+			var a=[{width:'5%',txt:'NO'},
+				{width:'20%',txt:'제목'},
+				{width:'30%',txt:'내용'},
+				{width:'5%',txt:'글쓴이'},
+				{width:'10%',txt:'등록일'},
+				{width:'9%',txt:'조회수'}
+				]
+			$.each(a,(i,j)=>{
+				tbl+='<th style="width'+j.width
+			+'; text-align: center;">'+j.txt+'</th>'
+			});
+			tbl+='</tr></thead><tbody id="tbody">';
+			tbl+='</tbody></table></div>'
+		return tbl;
+			}
 }
 var algoUI={
 	series : ()=>{
@@ -133,6 +153,7 @@ var algoUI={
 		+'<div id="result"></div>';
 	}
 }
+
 var pageUI={
 		paging:()=>{
 			return '<nav aria-label="Page navigation">'

@@ -71,36 +71,71 @@ meta.index=(()=>{
 			.appendTo('#h-btn')
 			.click(()=>{
 				alert('게시판 가기');
-				var url = ctx+'/get/board/list';
-				$.getJSON(url,x=>{alert('x msg is'+x.msg);
-			      $container.empty();
-	               $navbar.append(introUI.navbar());
-	               compUI.div('content').appendTo($container);
-	               $content = $('#content');
-	               compUI.table('board-tab').appendTo($content);
-	               compUI.thead('board-thead').appendTo($('#board-tab'));
-	               compUI.tr('board-th-tr').appendTo($('#board-thead')).css({'background-color':'yellow'});
-	               compUI.tbody('board-tbody').appendTo($('#board-tab'));
-	               compUI.tr('board-tb-tr').appendTo($('#board-thead'));
-	               compUI.idTag('th').text('No').appendTo($('#board-th-tr'));
-	               compUI.idTag('th').text('제목').appendTo($('#board-th-tr'));
-	               compUI.idTag('th').text('내용').appendTo($('#board-th-tr'));
-	               compUI.idTag('th').text('글쓴이').appendTo($('#board-th-tr'));
-	               compUI.idTag('th').text('등록일').appendTo($('#board-th-tr'));
-	               compUI.idTag('th').text('조회수').appendTo($('#board-th-tr'));
-	            
-	               compUI.idTag('td').text('1').appendTo($('#board-tb-tr')).css({'text-align':'left'});
-	               compUI.idTag('td').text('2').appendTo($('#board-tb-tr')).css({'text-align':'left'});
-	               compUI.idTag('td').text('3').appendTo($('#board-tb-tr')).css({'text-align':'left'});
-	               compUI.idTag('td').text('4').appendTo($('#board-tb-tr')).css({'text-align':'left'});
-	               compUI.idTag('td').text('5').appendTo($('#board-tb-tr')).css({'text-align':'left'});
-	               compUI.idTag('td').text('6').appendTo($('#board-tb-tr')).css({'text-align':'left'});
-	             
-	               $content.append(pageUI.paging());
+						$.getJSON(ctx+'/get/board/list',data=>{
+		
+				  $content=$('#content');
+			      var tbl=bbsUI.tbl();
+			  /*    var a=[
+					{
+						a:1,
+						b:'한국인사',
+						c:'안녕',
+						d:'길동',
+						e:'2017-09-10',
+						f:10
+							},
+					{
 
-				
+						a:2,
+						b:'중국인사',
+						c:'hello',
+						d:'jame',
+						e:'2017-09-10',
+						f:20		
+					},
+					{
+						a:3,
+						b:'미국인사',
+						c:'hello',
+						d:'jame',
+						e:'2017-09-10',
+						f:30
+					},
+					{
+						a:4,
+						b:'영국인사',
+						c:'hello',
+						d:'jame',
+						e:'2017-09-10',
+						f:40
+					},
+					{
+						a:5,
+						b:'태국인사',
+						c:'hello',
+						d:'jame',
+						e:'2017-09-10',
+						f:50
+					}
+				];*/
+				var tr='';
+				alert('결과'+data.result);
+				$.each(data.list,function(i,j){
+					tr+='<tr style="height" 25px">'
+						+'<td>'+j.articleSeq+'</td>'
+						+'<td>'+j.title+'</td>'
+						+'<td>'+j.content+'</td>'
+						+'<td>'+j.id+'</td>'
+						+'<td>'+j.regdate+'</td>'
+						+'<td>'+j.hitcount+'</td>'
+						+'<tr>';
 				});
-			});
+				console.log('tr:'+tr);
+				$content.html(tbl);
+				$('#tbody').html(tr);
+				
+					});
+				});
 		});
 		};
 	return {init:init};

@@ -3,12 +3,30 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gms.web.mapper.BoardMapper">
-<resultMap  id="RespMap" type="com.gms.web.command.RespMap"></resultMap>
+<resultMap  id="RespMap" type="com.gms.web.command.RespMap">
+<id property="articleSeq" column="article_seq"></id>
+	<result property="id" column="member_id"></result>
+	<result property="regdate" column="regdate"></result>
+	<result property="title" column="title"></result>
+	<result property="content" column="content"></result>
+	<result property="hitcount" column="hitcount"></result>
+</resultMap>
+
+<resultMap  id="Board" type="com.gms.web.board.Board">
+	<id property="articleSeq" column="article_seq"></id>
+	<result property="id" column="member_id"></result>
+	<result property="regdate" column="regdate"></result>
+	<result property="title" column="title"></result>
+	<result property="content" column="content"></result>
+	<result property="hitcount" column="hitcount"></result>
+</resultMap>
+
 
 
 <select  id="selectSome" 
-resultType="com.gms.web.command.RespMap" 
+resultMap="Board" 
 parameterType="com.gms.web.command.Command">
+ select * from board
  </select>
  
  <select  id="selectOne"

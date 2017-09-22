@@ -1,5 +1,6 @@
 package com.gms.web.board;
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -39,11 +40,13 @@ public class BoardController {
 		switch(cate){
 		case "board":
 			cmd=null;
-			/*listService= (x)-> {
+			listService= (x)-> {
 				return boardMapper.selectSome(cmd);
-				};
-			map.put("list",listService.execute(cmd));*/
-			map.put("msg", "Hello ajax");
+				};			
+			System.out.println("jjjjjjjjjj"+listService);
+			map.put("result","success");
+			map.put("list",listService.execute(cmd));
+			map.put("msg", null);
 			break;
 		
 		case "grade": 

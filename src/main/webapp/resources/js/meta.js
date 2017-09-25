@@ -70,77 +70,113 @@ meta.index=(()=>{
 			.css({'margin-left':'10px'})
 			.appendTo('#h-btn')
 			.click(()=>{
-				alert('게시판 가기');
-						$.getJSON(ctx+'/get/board/list',data=>{
-		
-				  $content=$('#content');
-			      var tbl=bbsUI.tbl();
-			  /*    var a=[
-					{
-						a:1,
-						b:'한국인사',
-						c:'안녕',
-						d:'길동',
-						e:'2017-09-10',
-						f:10
-							},
-					{
-
-						a:2,
-						b:'중국인사',
-						c:'hello',
-						d:'jame',
-						e:'2017-09-10',
-						f:20		
-					},
-					{
-						a:3,
-						b:'미국인사',
-						c:'hello',
-						d:'jame',
-						e:'2017-09-10',
-						f:30
-					},
-					{
-						a:4,
-						b:'영국인사',
-						c:'hello',
-						d:'jame',
-						e:'2017-09-10',
-						f:40
-					},
-					{
-						a:5,
-						b:'태국인사',
-						c:'hello',
-						d:'jame',
-						e:'2017-09-10',
-						f:50
-					}
-				];*/
-				var tr='';
-				alert('결과'+data.result);
-				$.each(data.list,function(i,j){
-					tr+='<tr style="height" 25px">'
-						+'<td>'+j.articleSeq+'</td>'
-						+'<td>'+j.title+'</td>'
-						+'<td>'+j.content+'</td>'
-						+'<td>'+j.id+'</td>'
-						+'<td>'+j.regdate+'</td>'
-						+'<td>'+j.hitcount+'</td>'
-						+'<tr>';
-				});
-				console.log('tr:'+tr);
-				$content.html(tbl);
-				$('#tbody').html(tr);
-				
-					});
+				meta.board.list();
 				});
 		});
 		};
 	return {init:init};
 })();
+meta.board=(()=>{
+	var init=()=>{
+		ctx=$$('x');
+		js=$$('j');
+		$container=$('#container');
+		temp=js+'/template.js';
+	  };
+	var detail=x=>{
+		meta.board.init();
+			 alert('선택 시퀀스'+x);
+		 $.getJSON(ctx+'/get/board/'+x,data=>{
+			 $.getScript(temp,()=>{					
+				 $container.html(bbsUI.detail());
+				 $('#legendary').html('게시글 보기');
+					$('#fname').val(data.bean.title).attr('readonly','true');
+					$('#writer').val(data.bean.id).attr('readonly','true');
+					$('#message').val(data.bean.content).attr('readonly','true');
+				  $('#checkBtn').html('수정')
+				  .click(e=>{
+					 e.preventDefault();
+					 update(x);
+				 });
+				  $('#noBtn').html('삭제')
+				  .click(e=>{
+					  e.preventDefault();
+					  deleteArticle(x);
+				  });
+				 });
+		 });
+	};
 
+	var update=x=>{
+	init();
+		alert('수정클릭');	
+	 $.getJSON(ctx+'/get/board/'+x,data=>{
+		 $.getScript(temp,()=>{					
+			 $container.html(bbsUI.detail());
+			 $('#legendary').html('게시글 수정!!');
+			  
+			 $('#checkBtn').html('확인').click(e=>{
+				  e.preventDefault();
+				 meta.board.list();
+			 });
+			  
+			  $('#noBtn').html('삭제') .click(e=>{
+				  e.preventDefault();
+				  deleteArticle(x);
+			  });
+	
+		 });
+	 });
+	};
+	
+	var deleteArticle=x=>{
+	alert('삭제클릭');
+	;
+	};
+	var list=()=>{
+		init();
+		$.getJSON(ctx+'/list/board',data=>{
+			  $container.html(bbsUI.search() );
+			  alert('게시글수'+data.total.count);
+			  var tbl=bbsUI.tbl();
+			var tr='';
+		alert('결과'+data.result);
+		$.each(data.list,function(i,j){
+			tr+='<tr style="height" 25px">'
+				+'<td>'+j.articleSeq+'</td>'
+				+'<td><a onclick="meta.board.detail('+j.articleSeq+')">'+j.title+'</a></td>'
+				+'<td>'+j.content+'</td>'
+				+'<td>'+j.id+'</td>'
+				+'<td>'+j.regdate+'</td>'
+				+'<td>'+j.hitcount+'</td>'
+				+'<tr>';
+		});
+		console.log('tr:'+tr);
+		$container.append(tbl);
+		  $count=$('#total');
+		  $count.text('총게시글 수');
+		  $count.append(data.total.count);
+		  $('#writeBtn').click((e)=>{
+			 meta.board.write();
+		  });
+		$('#tbody').html(tr);
+		$container.append(bbsUI.pagination());
+	
+			});
+	};
+	var write=()=>{
+	  			alert('쓰기');
+		      init();
+		      $.getScript(temp,()=>{
+		         var $container=$('#container');
+		         $container.empty();
+		         compUI.div('content').appendTo($container);
+		         $content=$('#content');
+		         $content.html(bbsUI.detail());
+		      });
+		   };
+	   return {init : init, detail : detail, write : write, update:update, list:list};
+})();
 meta.auth=(()=>{
 	var $wrapper,ctx,img,js,css,temp;
 	var init=()=>{
@@ -186,7 +222,7 @@ meta.navbar=(()=>{
 		onCreate();
 		
 		/*algo=js+'/algo.js';*/
-		
+	
 	};
 	var onCreate=()=>{
 		$.getScript(temp,()=>{

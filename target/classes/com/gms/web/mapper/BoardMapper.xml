@@ -3,8 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gms.web.mapper.BoardMapper">
-<resultMap  id="RespMap" type="com.gms.web.command.RespMap">
+<resultMap  id="resultMap" type="com.gms.web.command.ResultMap">
 <id property="articleSeq" column="article_seq"></id>
+	<result property="count" column="count"></result>
 	<result property="id" column="member_id"></result>
 	<result property="regdate" column="regdate"></result>
 	<result property="title" column="title"></result>
@@ -23,15 +24,20 @@
 
 
 
-<select  id="selectSome" 
+<select  id="selectList" 
 resultMap="Board" 
 parameterType="com.gms.web.command.Command">
  select * from board
  </select>
+ <select  id="count" 
+ resultMap="resultMap">
+	SELECT COUNT(*) AS count FROM board;
+ </select>
  
  <select  id="selectOne"
-  resultType="com.gms.web.command.RespMap" 
-  parameterType="com.gms.web.command.Command">
+ parameterType="com.gms.web.command.Command"
+  resultMap="Board">
+  	SELECT * FROM board where article_seq like #{search};
   </select>
 
  <delete  id="delete" 

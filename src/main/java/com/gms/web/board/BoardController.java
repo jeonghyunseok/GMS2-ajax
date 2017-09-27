@@ -23,6 +23,8 @@ import com.gms.web.command.ResultMap;
 import com.gms.web.common.HomeController;
 import com.gms.web.mapper.BoardMapper;
 import com.gms.web.mapper.GradeMapper;
+import com.gms.web.mapper.MemberMapper;
+import com.gms.web.member.StudentDTO;
 import com.gms.web.service.IDeleteService;
 import com.gms.web.service.IGetService;
 import com.gms.web.service.IListService;
@@ -35,6 +37,8 @@ public class BoardController {
 	@Autowired BoardMapper boardMapper;
 	@Autowired GradeMapper gradeMapper;
 	@Autowired Command cmd;
+	@Autowired MemberMapper memberMapper;
+	@Autowired StudentDTO stu;
 	public @ResponseBody Map<?,?> post(){
 		return null;
 	};
@@ -120,20 +124,36 @@ public class BoardController {
 		 map.put("articleSeq", cmd.getSearch());
 		return map;
 	};
-	@SuppressWarnings("unused")
+
 	@RequestMapping(value="/delete/board",
 	method=RequestMethod.POST,
 	consumes="application/json")
 public @ResponseBody Map<?,?> delete(@RequestBody Board board){
-		IDeleteService deleteService=null;
 		Map<String,Object> map= new HashMap<>();
-		map.put("seq", board.getArticleSeq());
+		IDeleteService deleteService=null;
+		IGetService getService=null;
 		cmd.setSearch(String.valueOf(board.getArticleSeq()));
+		cmd.setColumn(board.getId());
+		cmd.setAction(board.getContent());
+		System.out.println("아빌바ㅣ저이함"+board.getId());
+		map.put("msg", board.getTitle());
+		map.put("seq", board.getArticleSeq());
+		
+		getService=x->{
+			return memberMapper.selectById(cmd);
+		};
+		stu= (StudentDTO) getService.execute(cmd);
+		System.out.println("비밀번호"+stu.getPassword());
 		deleteService=x->{
 			boardMapper.delete(cmd);
 		};
-		 deleteService.execute(cmd);
-		 map.put("articleSeq", cmd.getSearch());
+		if(stu.getPassword().equals(board.getContent())) {
+				deleteService.execute(cmd);
+				map.put("result", "success");
+		}else {
+			map.put("result", "fail");
+		}
+		
 		return map;
 	};
 }

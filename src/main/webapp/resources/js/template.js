@@ -222,7 +222,7 @@ var bbsUI={
 				+'<input type="password" class="form-control"'
 				+'id="user-email2" placeholder="Enter Password">'
 				+'</div>'
-				+'<button type="submit" style="width:200px"'
+				+'<button type="submit" style="width:200px" id="delCheck"'
 				+'class="btn btn-primary center-block">확인</button>'
 				+'</form>'
 				+'</div>'

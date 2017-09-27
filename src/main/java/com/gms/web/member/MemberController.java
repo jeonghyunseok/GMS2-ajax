@@ -2,6 +2,7 @@ package com.gms.web.member;
 
 import java.util.ArrayList;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.gms.web.command.CommandDTO;
+import com.gms.web.command.Command;
 import com.gms.web.common.HomeController;
 import com.gms.web.grade.MajorDTO;
 import com.gms.web.proxy.PageProxy;
@@ -31,7 +32,7 @@ import com.gms.web.proxy.PageProxy;
 @RequestMapping({"/member","/student"})
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	@Autowired CommandDTO cmd;
+	@Autowired Command cmd;
 	@Autowired MemberService service;
 	@Autowired PageProxy pxy;
 	@Autowired StudentDTO stu;

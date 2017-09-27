@@ -46,9 +46,8 @@ parameterType="com.gms.web.command.Command">
  </delete>
 	
  <update id="update" 
-parameterType="com.gms.web.command.Command"
->
-update board set title=#{column}  ,content=#{action} where article_seq= #{search};
+parameterType="com.gms.web.command.Command">
+update board set title=#{column} ,content=#{action} where article_seq= #{search};
  </update>
  
   <insert id="insert" 

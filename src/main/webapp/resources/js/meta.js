@@ -88,8 +88,7 @@ meta.board=(()=>{
 		meta.board.init();
 			 alert('선택 시퀀스'+x);
 		 $.getJSON(ctx+'/get/board/'+x,data=>{
-			var pass='';
-			 $.getScript(temp,()=>{					
+				 $.getScript(temp,()=>{					
 				 $container.html(bbsUI.detail());
 				 $('#legendary').html('게시글 보기');
 				 	$('#regdate').html(data.bean.regdate);
@@ -121,7 +120,7 @@ meta.board=(()=>{
 							  contentType : 'application/json',
 							  success : d=>{
 								  alert('ajax 통신성공'+d.msg);
-								  detail(d.articleSeq);
+								  detail(d.articleSeq);								  
 							  },
 							    error : (x,s,m)=>{
 								  alert('글 수정시 에러발생'+m);
@@ -132,39 +131,22 @@ meta.board=(()=>{
 					  $('#noBtn').html('취소').attr('id','resetBtn').attr('type','reset')
 					  .removeAttr('data-toggle').removeAttr('data-target');
 				 });
-				  $('#noBtn').html('삭제')
+				  $('#noBtn')
 				  .attr('data-toggle','modal')
 				  .attr('data-target','#modal')
-				  .addClass('btn-btn-primary')
+				  .addClass('btn btn-primary')
 				  .html('삭제하기')
 				  .click(e=>{
-					  e.preventDefault();
-					  deleteArticle(x+','+pass);
-					  var _seq=data.bean.articleSeq;
-					  var _title=$('#fname').val();
-						 var _writer=$('#writer').val();
-						 var _message=$('#message').val();
-					  $.ajax({
-						  url:ctx+'/delete/board',
-						  method : 'post',
-						  dataType:'json',
-						  data:JSON.stringify({
-							  'articleSeq':_seq,
-							  'title': _title,
-							  'id':_writer,
-							  'content':_message
-						  }),
-						  contentType : 'application/json',
-						  success : d=>{
-							  alert('ajax 통신성공'+d.msg);
-							  detail(d.articleSeq);
-						  },
-						    error : (x,s,m)=>{
-							  alert('글 수정시 에러발생'+m);
-						  }
+					  $('#delCheck').click(e=>{
+						  e.preventDefault();
+						  var pass=$('#user-email2').val();
+						  var _seq=data.bean.articleSeq;
+						  var _title=$('#fname').val();
+						  var _writer=data.bean.id;
+						  var _message=$('#message').val();
+							 deleteArticle(x,_writer,pass);
+					  })
 					  });
-				  });
-				  meta.list();
 				 });
 		 });
 	};
@@ -179,20 +161,38 @@ meta.board=(()=>{
 			 $('#checkBtn').html('확인').click(e=>{
 				  e.preventDefault();
 				  $.ajax({});
-			 });
-			  
-			  $('#noBtn').html('삭제') .click(e=>{
-				  e.preventDefault();
-				  deleteArticle(x);
-				  meta.list();
-			  });
+			 });		  
+			
 	
 		 });
 	 });
 	};
 	
-	var deleteArticle=x=>{
-	alert('삭제클릭');
+	var deleteArticle=(x,id,pass)=>{
+	
+	 $.ajax({
+		  url:ctx+'/delete/board',
+		  method : 'post',
+		  dataType:'json',
+		  data:JSON.stringify({
+			  'articleSeq':x,
+			  'id':id,
+			  'content':pass
+		  }),
+		  contentType:'application/json',
+		  success : d=>{
+			  if(d.result==='success'){
+				  alert('삭제성공');
+				  list();
+			  }else{
+				  alert('틀린 비번');				  
+			  }
+		
+		  },
+		    error : (x,s,m)=>{
+			  alert('글 수정시 에러발생'+m);
+		  }
+	  });
 	;
 	};
 	var list=x=>{

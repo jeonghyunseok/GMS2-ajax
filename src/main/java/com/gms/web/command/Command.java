@@ -1,6 +1,7 @@
 package com.gms.web.command;
 
 import org.springframework.context.annotation.Lazy;
+
 import org.springframework.stereotype.Component;
 
 import com.gms.web.constants.Extention;
@@ -10,6 +11,8 @@ import com.gms.web.member.MemberDTO;
 
 import lombok.Getter;
 import lombok.Setter;
+
+
 
 @Lazy @Component
 public class Command implements Commandable{

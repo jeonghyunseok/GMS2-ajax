@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+@IMPORT url("common.css");
+.title{  position: absolute;
+    bottom: 50px;
+    left: 16px;
+    font-size: 18px;
+   color: white;}
+.subtitle{  position: absolute;
+    bottom: 8px;
+    left: 16px;
+    font-size: 18px;
+    color: white; }
+.ad-marker{
+	position: absolute;
+	 right: 0px;
+	 top: 0px;
+}
+.everywhere-link{
+	color:blue;
+}
+.ad-logo{
+	margin:0 auto;
+	witdth:150px;
+	height:75px;
+	max-width: 150px;
+    max-height: 100px;
+        top: 1.5rem;
+}
+
+

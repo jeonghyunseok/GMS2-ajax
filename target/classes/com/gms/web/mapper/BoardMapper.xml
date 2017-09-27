@@ -36,16 +36,19 @@ parameterType="com.gms.web.command.Command">
  
  <select  id="selectOne"
  parameterType="com.gms.web.command.Command"
-  resultMap="Board">
-  	SELECT * FROM board where article_seq like #{search};
+  resultMap="resultMap">
+  	SELECT * FROM board where ${column} like #{search};
   </select>
 
  <delete  id="delete" 
  parameterType="com.gms.web.command.Command">
-	</delete>
+ delete from board where article_seq= #{search};
+ </delete>
 	
  <update id="update" 
-parameterType="com.gms.web.command.Command">
+parameterType="com.gms.web.command.Command"
+>
+update board set title=#{column}  ,content=#{action} where article_seq= #{search};
  </update>
  
   <insert id="insert" 
